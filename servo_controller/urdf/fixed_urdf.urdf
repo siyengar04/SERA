@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot">
+
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.254 0.127 0.0635"/>
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.254 0.127 0.0635"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+            <mass value="2.000"/>
+            <inertia
+              ixx="0.03562" ixy="0.00000" ixz="0.00000"
+              iyy="0.04262" iyz="0.00000"
+              izz="0.04508"/>
+          </inertial>
+    </link>
+
+    <!-- <link name="lidar_link">
+    <visual>
+      <geometry>
+        <box size="0.080 0.060 0.050"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.050"/>
+      <inertia ixx="0.00092" ixy="0.00000" ixz="0.00001" iyy="0.00094" iyz="0.00000" izz="0.00093"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.010 0.000 -0.015" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <box size="0.080 0.060 0.050"/>
+      </geometry>
+    </collision>
+  </link> -->
+
+    <!-- FL -->
+    <joint name="hip_fl" type="revolute">
+        <limit upper="0.4" effort="100" velocity="10" lower="-0.2"/>
+        <origin xyz ="0.0508 0.0508 0" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link = "hipbone_fl"/>
+    </joint>
+
+    <link name="hipbone_fl">
+        <visual>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="shoulder_fl" type="revolute">
+        <limit upper="0.5" effort="100" velocity="10" lower="-0.1"/>
+
+        <origin xyz="0 0 0" rpy = "0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <parent link="hipbone_fl"/>
+        <child link="femur_fl"/>
+    </joint>
+
+    <link name="femur_fl">
+        <visual>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+            <geometry>
+
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+
+            <geometry>
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="knee_fl" type="revolute">
+        <limit upper="-0.5" effort="100" velocity="10" lower="-2"/>
+
+        <origin xyz="0 0 -0.127" rpy = "0 0 1.57"/>
+        <parent link="femur_fl"/>
+        <child link="tibia_fl"/>
+    </joint>
+
+    <link name="tibia_fl">
+        <visual>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <!-- FR -->
+    <joint name="hip_fr" type="revolute">
+        <limit upper="0.4" effort="100" velocity="10" lower="-0.2"/>
+
+        <origin xyz ="0.0508 -0.0508 0" rpy="0 0 3.14"/>
+        <parent link="base_link"/>
+        <child link = "hipbone_fr"/>
+    </joint>
+
+    <link name="hipbone_fr">
+        <visual>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="shoulder_fr" type="revolute">
+        <limit upper="0.1" effort="100" velocity="10" lower="-0.5"/>
+
+        <origin xyz="0 0 0" rpy = "0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <parent link="hipbone_fr"/>
+        <child link="femur_fr"/>
+    </joint>
+
+    <link name="femur_fr">
+        <visual>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+
+            <geometry>
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="knee_fr" type="revolute">
+        <limit upper="2" effort="100" velocity="10" lower="-0.5"/>
+
+        <origin xyz="0 0 -0.127" rpy = "0 0 1.57"/>
+        <parent link="femur_fr"/>
+        <child link="tibia_fr"/>
+    </joint>
+
+    <link name="tibia_fr">
+        <visual>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- BR -->
+    <joint name="hip_br" type="revolute">
+        <limit upper="0.4" effort="100" velocity="10" lower="-0.2"/>
+
+        <origin xyz ="-0.0508 -0.0508 0" rpy="0 0 3.14"/>
+        <parent link="base_link"/>
+        <child link = "hipbone_br"/>
+    </joint>
+
+    <link name="hipbone_br">
+        <visual>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="shoulder_br" type="revolute">
+        <limit upper="0.1" effort="100" velocity="10" lower="-0.5"/>
+
+        <origin xyz="0 0 0" rpy = "0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <parent link="hipbone_br"/>
+        <child link="femur_br"/>
+    </joint>
+
+    <link name="femur_br">
+        <visual>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+
+            <geometry>
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="knee_br" type="revolute">
+        <limit upper="2" effort="100" velocity="10" lower="-0.5"/>
+
+        <origin xyz="0 0 -0.127" rpy = "0 0 1.57"/>
+        <parent link="femur_br"/>
+        <child link="tibia_br"/>
+    </joint>
+
+    <link name="tibia_br">
+        <visual>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- BL -->
+    <joint name="hip_bl" type="revolute">]
+        <limit upper="0.4" effort="100" velocity="10" lower="-0.2"/>
+
+        <origin xyz ="-0.0508 0.0508 0" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link = "hipbone_bl"/>
+    </joint>
+
+    <link name="hipbone_bl">
+        <visual>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz=" 0.0 0.0 0" rpy = "0 0 0"/>
+
+            <geometry>
+
+                <box size = "0.0635 0.03175 0.0381"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="shoulder_bl" type="revolute">
+        <limit upper="0.5" effort="100" velocity="10" lower="-0.1"/>
+
+        <origin xyz="0 0 0" rpy = "0 0 0"/>
+        <axis xyz="0 1 0"/>
+        <parent link="hipbone_bl"/>
+        <child link="femur_bl"/>
+    </joint>
+
+    <link name="femur_bl">
+        <visual>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.027 -0.0635" rpy="0 0 0"/>
+
+            <geometry>
+                <box size = "0.0254 0.0254 0.127"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="knee_bl" type="revolute">
+        <limit upper="-0.5" effort="100" velocity="10" lower="-2"/>
+
+        <origin xyz="0 0 -0.127" rpy = "0 0 1.57"/>
+        <parent link="femur_bl"/>
+        <child link="tibia_bl"/>
+    </joint>
+
+    <link name="tibia_bl">
+        <visual>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0254 0.0 -0.06985" rpy="0 0 0"/>
+
+            <geometry>
+                <box size = "0.00635 0.00635 0.1397"/>
+            </geometry>
+        </collision>
+
+    </link>
+
+
+</robot>

@@ -1,0 +1,505 @@
+<?xml version="1.0"?>
+<?xml-model href="https://raw.githubusercontent.com/ros/urdfdom/master/xsd/urdf.xsd" ?>
+
+<robot name="robot">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.254 0.127 0.0635"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="2.000"/>
+      <inertia
+        ixx="0.03562" ixy="0.00000" ixz="0.00000"
+        iyy="0.04262" iyz="0.00000"
+        izz="0.04508"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 0.000 0.015" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <box size="0.260 0.160 0.090"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="lidar_link">
+    <visual>
+      <geometry>
+        <box size="0.080 0.060 0.050"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.050"/>
+      <inertia
+        ixx="0.00092" ixy="0.00000" ixz="0.00001"
+        iyy="0.00094" iyz="0.00000"
+        izz="0.00093"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.010 0.000 -0.015" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <box size="0.080 0.060 0.050"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_fl_ref">
+    <visual>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.000"/>
+      <inertia
+        ixx="0.00000" ixy="0.00000" ixz="0.00000"
+        iyy="0.00000" iyz="0.00000"
+        izz="0.00000"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_fr_ref">
+    <visual>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.000"/>
+      <inertia
+        ixx="0.00000" ixy="0.00000" ixz="0.00000"
+        iyy="0.00000" iyz="0.00000"
+        izz="0.00000"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_bl_ref">
+    <visual>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.000"/>
+      <inertia
+        ixx="0.00000" ixy="0.00000" ixz="0.00000"
+        iyy="0.00000" iyz="0.00000"
+        izz="0.00000"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_br_ref">
+    <visual>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.000"/>
+      <inertia
+        ixx="0.00000" ixy="0.00000" ixz="0.00000"
+        iyy="0.00000" iyz="0.00000"
+        izz="0.00000"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <box size="0.002 0.002 0.002"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_fl_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.233"/>
+      <inertia
+        ixx="0.00216" ixy="-0.00001" ixz="0.00001"
+        iyy="0.00216" iyz="0.00001"
+        izz="0.00211"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.005 -0.005 0.005" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_fr_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.233"/>
+      <inertia
+        ixx="0.00216" ixy="0.00001" ixz="0.00001"
+        iyy="0.00216" iyz="-0.00001"
+        izz="0.00211"/>
+    </inertial>
+    <collision>
+      <origin xyz="-0.005 0.005 0.005" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_bl_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.233"/>
+      <inertia
+        ixx="0.00216" ixy="0.00001" ixz="-0.00001"
+        iyy="0.00216" iyz="0.00001"
+        izz="0.00211"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.005 -0.005 0.005" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="hip_br_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.233"/>
+      <inertia
+        ixx="0.00216" ixy="-0.00001" ixz="-0.00001"
+        iyy="0.00216" iyz="-0.00001"
+        izz="0.00211"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.005 0.005 0.005" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.025" length="0.070"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="femur_fl_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.084"/>
+      <inertia
+        ixx="0.00414" ixy="0.00000" ixz="0.00000"
+        iyy="0.00410" iyz="0.00006"
+        izz="0.00386"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 0.015 -0.045" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="femur_fr_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.084"/>
+      <inertia
+        ixx="0.00414" ixy="0.00000" ixz="0.00000"
+        iyy="0.00410" iyz="-0.00006"
+        izz="0.00386"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 -0.015 -0.045" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="femur_bl_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.084"/>
+      <inertia
+        ixx="0.00414" ixy="0.00000" ixz="0.00000"
+        iyy="0.00410" iyz="0.00006"
+        izz="0.00386"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 0.015 -0.045" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="femur_br_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.084"/>
+      <inertia
+        ixx="0.00414" ixy="0.00000" ixz="0.00000"
+        iyy="0.00410" iyz="-0.00006"
+        izz="0.00386"/>
+    </inertial>
+    <collision>
+      <origin xyz="0.000 -0.015 -0.045" rpy ="0.000 0.000 0.000"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.130"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="tibia_fl_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.015" length="0.100"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.034"/>
+      <inertia
+        ixx="0.00159" ixy="0.00000" ixz="-0.00001"
+        iyy="0.00159" iyz="0.00000"
+        izz="0.00147"/>
+    </inertial>
+  </link>
+
+  <link name="tibia_fr_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.015" length="0.100"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.034"/>
+      <inertia
+        ixx="0.00159" ixy="0.00000" ixz="-0.00001"
+        iyy="0.00159" iyz="0.00000"
+        izz="0.00147"/>
+    </inertial>
+  </link>
+
+  <link name="tibia_bl_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.015" length="0.100"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.034"/>
+      <inertia
+        ixx="0.00159" ixy="0.00000" ixz="-0.00001"
+        iyy="0.00159" iyz="0.00000"
+        izz="0.00147"/>
+    </inertial>
+  </link>
+
+  <link name="tibia_br_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.015" length="0.100"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0.000 0.000 0.000" rpy ="0.000 0.000 0.000"/>
+      <mass value="0.034"/>
+      <inertia
+        ixx="0.00159" ixy="0.00000" ixz="-0.00001"
+        iyy="0.00159" iyz="0.00000"
+        izz="0.00147"/>
+    </inertial>
+  </link>
+
+
+  <joint name="lidar" type="fixed" dont_collapse="true">
+    <parent link="base_link"/>
+    <child  link="lidar_link"/>
+    <origin xyz="0.04312 0.00000 0.08341"/>
+  </joint>
+
+  <joint name="fl_ref" type="fixed" dont_collapse="true">
+    <parent link="base_link"/>
+    <child  link="hip_fl_ref"/>
+    <origin xyz="0.09170 0.05355 -0.00279"/>
+  </joint>
+
+  <joint name="fr_ref" type="fixed" dont_collapse="true">
+    <parent link="base_link"/>
+    <child  link="hip_fr_ref"/>
+    <origin xyz="0.09170 -0.05355 -0.00279"/>
+  </joint>
+
+  <joint name="bl_ref" type="fixed" dont_collapse="true">
+    <parent link="base_link"/>
+    <child  link="hip_bl_ref"/>
+    <origin xyz="-0.09170 0.05355 -0.00279"/>
+  </joint>
+
+  <joint name="br_ref" type="fixed" dont_collapse="true">
+    <parent link="base_link"/>
+    <child  link="hip_br_ref"/>
+    <origin xyz="-0.09170 -0.05355 -0.00279"/>
+  </joint>
+
+  <joint name="hip1_fl" type="revolute">
+    <axis xyz="1.000 0.000 0.000"/>
+    <limit effort="80.00000" lower="-0.78540" upper="1.57080" velocity="1.04720"/>
+    <parent link="hip_fl_ref"/>
+    <child  link="hip_fl_link"/>
+    <origin xyz="0.00000 0.00000 0.00000"/>
+  </joint>
+
+  <joint name="hip1_fr" type="revolute">
+    <axis xyz="1.000 0.000 0.000"/>
+    <limit effort="80.00000" lower="-0.78540" upper="1.57080" velocity="1.04720"/>
+    <parent link="hip_fr_ref"/>
+    <child  link="hip_fr_link"/>
+    <origin xyz="0.00000 0.00000 0.00000"/>
+  </joint>
+
+  <joint name="hip1_bl" type="revolute">
+    <axis xyz="1.000 0.000 0.000"/>
+    <limit effort="80.00000" lower="-0.78540" upper="1.57080" velocity="1.04720"/>
+    <parent link="hip_bl_ref"/>
+    <child  link="hip_bl_link"/>
+    <origin xyz="0.00000 0.00000 0.00000"/>
+  </joint>
+
+  <joint name="hip1_br" type="revolute">
+    <axis xyz="1.000 0.000 0.000"/>
+    <limit effort="80.00000" lower="-0.78540" upper="1.57080" velocity="1.04720"/>
+    <parent link="hip_br_ref"/>
+    <child  link="hip_br_link"/>
+    <origin xyz="0.00000 0.00000 0.00000"/>
+  </joint>
+
+  <joint name="shoulder_fl" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="0.00000" upper="2.35619" velocity="1.04720"/>
+    <parent link="hip_fl_link"/>
+    <child  link="femur_fl_link"/>
+    <origin xyz="0.00000 0.03559 0.00000"/>
+  </joint>
+
+  <joint name="shoulder_fr" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="0.00000" upper="2.35619" velocity="1.04720"/>
+    <parent link="hip_fr_link"/>
+    <child  link="femur_fr_link"/>
+    <origin xyz="0.00000 -0.03559 0.00000"/>
+  </joint>
+
+  <joint name="shoulder_bl" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="0.00000" upper="2.35619" velocity="1.04720"/>
+    <parent link="hip_bl_link"/>
+    <child  link="femur_bl_link"/>
+    <origin xyz="0.00000 0.03559 0.00000"/>
+  </joint>
+
+  <joint name="shoulder_br" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="0.00000" upper="2.35619" velocity="1.04720"/>
+    <parent link="hip_br_link"/>
+    <child  link="femur_br_link"/>
+    <origin xyz="0.00000 -0.03559 0.00000"/>
+  </joint>
+
+  <joint name="knee_fl" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="-2.35619" upper="-0.52360" velocity="1.04720"/>
+    <parent link="femur_fl_link"/>
+    <child  link="tibia_fl_link"/>
+    <origin xyz="0.00000 0.01071 -0.09996"/>
+  </joint>
+
+  <joint name="knee_fr" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="-2.35619" upper="-0.52360" velocity="1.04720"/>
+    <parent link="femur_fr_link"/>
+    <child  link="tibia_fr_link"/>
+    <origin xyz="0.00000 -0.01071 -0.09996"/>
+  </joint>
+
+  <joint name="knee_bl" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="-2.35619" upper="-0.52360" velocity="1.04720"/>
+    <parent link="femur_bl_link"/>
+    <child  link="tibia_bl_link"/>
+    <origin xyz="0.00000 0.01071 -0.09996"/>
+  </joint>
+
+  <joint name="knee_br" type="revolute">
+    <axis xyz="0.000 1.000 0.000"/>
+    <limit effort="80.00000" lower="-2.35619" upper="-0.52360" velocity="1.04720"/>
+    <parent link="femur_br_link"/>
+    <child  link="tibia_br_link"/>
+    <origin xyz="0.00000 -0.01071 -0.09996"/>
+  </joint>
+
+
+</robot>

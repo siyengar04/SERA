@@ -1,0 +1,15 @@
+# Default initial positions for robot's ros2_control fake system
+
+initial_positions:
+  hip_bl: 0
+  hip_br: 0
+  hip_fl: 0
+  hip_fr: 0
+  knee_bl: 0
+  knee_br: 0
+  knee_fl: 0
+  knee_fr: 0
+  shoulder_bl: 0
+  shoulder_br: 0
+  shoulder_fl: 0
+  shoulder_fr: 0

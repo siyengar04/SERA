@@ -1,0 +1,43 @@
+# MoveIt uses this configuration for controller management
+
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+moveit_simple_controller_manager:
+  controller_names:
+    - BL_controller
+    - BR_controller
+    - FL_controller
+    - FR_controller
+
+  BL_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - hip_bl
+      - shoulder_bl
+      - knee_bl
+  BR_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - hip_br
+      - shoulder_br
+      - knee_br
+  FL_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - hip_fl
+      - shoulder_fl
+      - knee_fl
+  FR_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - hip_fr
+      - shoulder_fr
+      - knee_fr
