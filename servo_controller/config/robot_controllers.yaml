@@ -1,0 +1,27 @@
+# config/robot_controllers.yaml
+
+controller_manager:
+  ros__parameters:
+    update_rate: 50
+
+joint_state_broadcaster:
+  ros__parameters:
+    type: joint_state_broadcaster/JointStateBroadcaster
+    publish_rate: 50
+
+position_controllers:
+  ros__parameters:
+    type: position_controllers/JointGroupPositionController
+    joints:
+      - hip_fl
+      - shoulder_fl
+      - knee_fl
+      - hip_fr
+      - shoulder_fr
+      - knee_fr
+      - hip_bl
+      - shoulder_bl
+      - knee_bl
+      - hip_br
+      - shoulder_br
+      - knee_br
