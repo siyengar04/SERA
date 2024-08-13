@@ -8,6 +8,7 @@
   <!-- Gazebo plugin for ros2_control -->
   <gazebo>
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find servo_controller)/config/robot_controllers.yaml</parameters>
       <robotNamespace>/</robotNamespace>
     </plugin>
   </gazebo>
