@@ -37,7 +37,7 @@
     <origin rpy="0 0 0" xyz="0.0508 0.0508 0"/>
     <parent link="base_link"/>
     <child link="hipbone_fl"/>
-    <axis xyz="0 1 0"/>
+    <axis xyz="1 0 0"/>
   </joint>
 
   <link name="hipbone_fl">
@@ -61,7 +61,7 @@
   </link>
 
   <joint name="shoulder_fl" type="revolute">
-    <limit effort="100" lower="-0.1" upper="0.5" velocity="10"/>
+    <limit effort="100" lower="-0.1" upper="0.6" velocity="10"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <axis xyz="0 1 0"/>
     <parent link="hipbone_fl"/>
@@ -89,7 +89,7 @@
   </link>
 
   <joint name="knee_fl" type="revolute">
-    <limit effort="100" lower="-2" upper="-0.4" velocity="10"/>
+    <limit effort="100" lower="-0.5" upper="2" velocity="10"/>
     <origin rpy="0 0 1.57" xyz="0 0 -0.127"/>
     <parent link="femur_fl"/>
     <child link="tibia_fl"/>
@@ -121,7 +121,7 @@
     <origin rpy="0 0 3.14" xyz="0.0508 -0.0508 0"/>
     <parent link="base_link"/>
     <child link="hipbone_fr"/>
-    <axis xyz="0 1 0"/>
+    <axis xyz="1 0 0"/>
   </joint>
 
   <link name="hipbone_fr">
@@ -145,7 +145,7 @@
   </link>
 
   <joint name="shoulder_fr" type="revolute">
-    <limit effort="100" lower="-0.5" upper="0.1" velocity="10"/>
+    <limit effort="100" lower="-0.6" upper="0.1" velocity="10"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <axis xyz="0 1 0"/>
     <parent link="hipbone_fr"/>
@@ -205,7 +205,7 @@
     <origin rpy="0 0 3.14" xyz="-0.0508 -0.0508 0"/>
     <parent link="base_link"/>
     <child link="hipbone_br"/>
-    <axis xyz="0 1 0"/>
+    <axis xyz="1 0 0"/>
   </joint>
 
   <link name="hipbone_br">
@@ -229,7 +229,7 @@
   </link>
 
   <joint name="shoulder_br" type="revolute">
-    <limit effort="100" lower="-0.5" upper="0.1" velocity="10"/>
+    <limit effort="100" lower="-0.6" upper="0.1" velocity="10"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <axis xyz="0 1 0"/>
     <parent link="hipbone_br"/>
@@ -289,7 +289,7 @@
     <origin rpy="0 0 0" xyz="-0.0508 0.0508 0"/>
     <parent link="base_link"/>
     <child link="hipbone_bl"/>
-    <axis xyz="0 1 0"/>
+    <axis xyz="1 0 0"/>
   </joint>
 
   <link name="hipbone_bl">
@@ -313,7 +313,7 @@
   </link>
 
   <joint name="shoulder_bl" type="revolute">
-    <limit effort="100" lower="-0.1" upper="0.5" velocity="10"/>
+    <limit effort="100" lower="-0.1" upper="0.6" velocity="10"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <axis xyz="0 1 0"/>
     <parent link="hipbone_bl"/>
@@ -341,7 +341,7 @@
   </link>
 
   <joint name="knee_bl" type="revolute">
-    <limit effort="100" lower="-2" upper="-0.4" velocity="10"/>
+    <limit effort="100" lower="-0.5" upper="2" velocity="10"/>
     <origin rpy="0 0 1.57" xyz="0 0 -0.127"/>
     <parent link="femur_bl"/>
     <child link="tibia_bl"/>

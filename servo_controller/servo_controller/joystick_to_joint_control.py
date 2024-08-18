@@ -11,7 +11,7 @@ class JoystickToJointControl(Node):
             Joy, "joy", self.joy_callback, 10
         )
         self.joint_publisher = self.create_publisher(
-            Float64MultiArray, "/position_controllers/command", 10
+            Float64MultiArray, "/position_controllers/commands", 10
         )
         self.joint_positions = [0.0] * 12  # Assuming 12 joints
 

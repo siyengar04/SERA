@@ -34,6 +34,7 @@ setup(
             "robotcontroller = servo_controller.robotcontroller:main",
             "controller_to_servo_n = servo_controller.controller_to_servo_n:main",
             "joystick_to_joint_control = servo_controller.joystick_to_joint_control:main",
+            "initial_joint_position_publisher = servo_controller.initial_joint_position_publisher:main",
         ],
     },
 )

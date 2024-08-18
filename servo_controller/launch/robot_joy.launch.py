@@ -38,7 +38,18 @@ def generate_launch_description():
             Node(
                 package="gazebo_ros",
                 executable="spawn_entity.py",
-                arguments=["-entity", "robot", "-file", urdf_output],
+                arguments=[
+                    "-entity",
+                    "robot",
+                    "-file",
+                    urdf_output,
+                    "-x",
+                    "0",
+                    "-y",
+                    "0",
+                    "-z",
+                    "0.5",
+                ],
                 output="screen",
             ),
             # Start robot state publisher
@@ -94,6 +105,13 @@ def generate_launch_description():
                 name="joystick_to_joint_control",
                 output="screen",
                 parameters=[{"use_sim_time": True}],
+            ),
+            # Initial joint position publisher
+            Node(
+                package=package_name,
+                executable="initial_joint_position_publisher",  # This should match your Python node
+                name="initial_joint_position_publisher",
+                output="screen",
             ),
         ]
     )
