@@ -17,11 +17,11 @@ class ControllerToServo(Node):
             self.joy_callback,
             10
         )
-        self.servo_channels = [i for i in range(12)]  # Servo channels on the Maestro
-        self.posnorm = [1500] * 12  # Normal position in ms at 90 degrees position for all servos
-        self.dir = ["-", "+", "+", "+", "-", "-", "+", "+", "+", "-", "-", "-"]  # Direction for angle increase
-        self.K = 850 / 90  # ms per degree constant value (differs by servo)
-        self.a = 110  # Length of both links in mm
+        self.servo_channels = [i for i in range(12)] 
+        self.posnorm = [1500] * 12  # neutral pos
+        self.dir = ["-", "+", "+", "+", "-", "-", "+", "+", "+", "-", "-", "-"]  # angle direction
+        self.K = 850 / 90  # ms/deg
+        self.a = 110  # links, mm
 
     def to_deg(self, rad):
         return rad * 180 / math.pi
@@ -51,10 +51,10 @@ class ControllerToServo(Node):
         self.move_servos([theta3, theta1, theta2, None, None, None, None, None, None, None, None, None])
 
     def joy_callback(self, msg):
-        self.get_logger().info('Joy callback triggered')  # Log message to confirm callback is being triggered
-        # Example to trigger IK update, here using joystick axes
+        self.get_logger().info('Joy callback triggered')  # logger
+        
         if len(msg.axes) >= 3:
-            self.update_positions(msg.axes[0] * 100, msg.axes[1] * 100, msg.axes[2] * 100)  # Example scaling factor
+            self.update_positions(msg.axes[0] * 100, msg.axes[1] * 100, msg.axes[2] * 100)  
 
 def main(args=None):
     rclpy.init(args=args)
