@@ -1,237 +1,80 @@
-import time
 import rclpy
 from rclpy.node import Node
-from sensor_msgs.msg import Joy
-from .maestro import Controller  # Adjust based on your actual package structure
-from rclpy.logging import get_logger
+from std_msgs.msg import Float64MultiArray
+from .maestro import (
+    Controller,
+)  # Ensure this points to the path where maestro.py is located
 
-logger = get_logger("controller_to_servo")
 
-
-class ControllerToServo(Node):
+class ControllerToServoNode(Node):
     def __init__(self):
-        self.FRhip = 0
-        self.BRhip = 1
-        self.BLhip = 2
-        self.FLhip = 3
-        self.FRshoulder = 4
-        self.BRknee = 5
-        self.BLknee = 6
-        self.FLknee = 7
-        self.FRknee = 8
-        self.BRshoulder = 9
-        self.BLshoulder = 10
-        self.FLshoulder = 11
-
         super().__init__("controller_to_servo")
+        self.get_logger().info("ControllerToServoNode has started.")
+
+        # Initialize the Maestro controller
         self.servo_controller = Controller()
-        self.subscription = self.create_subscription(Joy, "joy", self.joy_callback, 10)
-        self.logger = self.get_logger()
-        self.is_walk_mode = False  # Initialize walk mode state
-        self.last_command_time = self.get_clock().now()
-        self.command_interval = 0.1  # seconds between commands
 
-        # Define min and max positions for each servo
-        self.servo_limits = [
-            (1136 * 4, 1776 * 4),  # Servo 0
-            (432 * 4, 1712 * 4),  # Servo 1
-            (64 * 4, 1632 * 4),  # Servo 2
-            (1664 * 4, 4080 * 4),  # Servo 3
-            (1408 * 4, 3968 * 4),  # Servo 4
-            (800 * 4, 1904 * 4),  # Servo 5
-            (64 * 4, 2304 * 4),  # Servo 6
-            (848 * 4, 1904 * 4),  # Servo 7
-            (64 * 4, 2192 * 4),  # Servo 8
-            (896 * 4, 2128 * 4),  # Servo 9
-            (2000 * 4, 2608 * 4),  # Servo 10
-            (1616 * 4, 2608 * 4),  # Servo 11
-        ]
+        # Set acceleration and speed for each servo
+        for chan in range(12):
+            self.servo_controller.setAccel(chan, 4)
+            self.servo_controller.setSpeed(chan, 10)
 
-        # Define home positions for each servo (example values)
-        self.home_positions = [
-            1414 * 4,  # Servo 0
-            432 * 4,  # Servo 1
-            687 * 4,  # Servo 2
-            2270 * 4,  # Servo 3
-            2121 * 4,  # Servo 4
-            800 * 4,  # Servo 5
-            2137 * 4,  # Servo 6
-            1466 * 4,  # Servo 7
-            1642 * 4,  # Servo 8
-            1390 * 4,  # Servo 9
-            2592 * 4,  # Servo 10
-            2128 * 4,  # Servo 11
-        ]
-        self.degree_to_servo_scale = 90  # Assuming each servo moves 90 degrees
+        # Map joint indices to Maestro channel numbers
+        self.joint_to_channel = {
+            0: 0,
+            1: 1,
+            2: 2,
+            3: 3,
+            4: 4,
+            5: 5,
+            6: 6,
+            7: 7,
+            8: 8,
+            9: 9,
+            10: 10,
+            11: 11,
+        }
 
-        self.move_to_home()
-
-    def joy_callback(self, msg):
-        if any(msg.buttons):  # Check if any button is pressed
-            if msg.buttons[0] == 1:
-                self.move_to_home()
-            elif msg.buttons[1] == 1:
-                self.is_walk_mode = not self.is_walk_mode
-                self.logger.info(
-                    f"Walk mode {'enabled' if self.is_walk_mode else 'disabled'}"
-                )
-
-            if self.is_walk_mode and msg.axes[1] > 0:
-                self.start_walking()
-            else:
-                self.update_servo_positions(msg)
-        else:
-            # If no buttons are pressed, move to home positions
-            self.move_to_home()
-
-    def degrees_to_servo_position(self, degrees, index):
-        min_val, max_val = self.servo_limits[index]
-        # Normalize degrees based on the servo's range
-        servo_position = min_val + (degrees / self.degree_to_servo_scale) * (
-            max_val - min_val
+        # Subscribe to the servo joint positions from the walking gait
+        self.subscription = self.create_subscription(
+            Float64MultiArray, "/servo_joint_positions", self.command_callback, 10
         )
-        return int(servo_position)
 
-    def update_servo_positions(self, degrees_list):
-        positions = []
-        for index, degrees in enumerate(degrees_list):
-            position = self.degrees_to_servo_position(degrees, index)
-            positions.append(position)
-            self.servo_controller.setTarget(index, position)
-        self.logger.info(f"Updated positions: {positions}")
+    def command_callback(self, msg):
+        if len(msg.data) != 12:
+            self.get_logger().error("Received command does not have 12 values.")
+            return
 
-    def start_walking(self, direction):
-        # Set speed for all servos
-        speed = 0
-        for i in range(12):
-            self.servo_controller.set_speed(i, speed)
+        # Send each position to the corresponding servo channel
+        for i, position in enumerate(msg.data):
+            if i in self.joint_to_channel:
+                channel = self.joint_to_channel[i]
+                target = self.convert_position_to_target(position, channel)
+                self.servo_controller.setTarget(channel, target)
+                self.get_logger().info(f"Set servo {channel} to target {target}")
 
-        Ystep = 40
-        Xstep = 50 * direction
-        t = 0.05  # 50 ms in seconds
+    def convert_position_to_target(self, position, channel):
+        min_target = 992
+        max_target = 2000
+        target = int((position + 1) * (max_target - min_target) / 2 + min_target)
+        return max(min_target, min(target, max_target))
 
-        # Step sequence
-        steps = [
-            (
-                [
-                    0,
-                    self.Ynorm - Ystep,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                    0,
-                    self.Ynorm - Ystep,
-                    0,
-                ],
-                t,
-            ),
-            (
-                [
-                    Xstep,
-                    self.Ynorm - Ystep,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                    Xstep,
-                    self.Ynorm - Ystep,
-                    0,
-                ],
-                t,
-            ),
-            (
-                [
-                    Xstep,
-                    self.Ynorm,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                    Xstep,
-                    self.Ynorm,
-                    0,
-                ],
-                t,
-            ),
-            (
-                [
-                    0,
-                    self.Ynorm,
-                    0,
-                    0,
-                    self.Ynorm - Ystep,
-                    0,
-                    0,
-                    self.Ynorm - Ystep,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                ],
-                t,
-            ),
-            (
-                [
-                    0,
-                    self.Ynorm,
-                    0,
-                    Xstep,
-                    self.Ynorm - Ystep,
-                    0,
-                    Xstep,
-                    self.Ynorm - Ystep,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                ],
-                t,
-            ),
-            (
-                [
-                    0,
-                    self.Ynorm,
-                    0,
-                    Xstep,
-                    self.Ynorm,
-                    0,
-                    Xstep,
-                    self.Ynorm,
-                    0,
-                    0,
-                    self.Ynorm,
-                    0,
-                ],
-                t,
-            ),
-        ]
-
-        for step_positions, duration in steps:
-            self.update_servo_positions(step_positions)
-            time.sleep(duration)
-
-    def move_to_home(self):
-        for index, home_pos in enumerate(self.home_positions):
-            self.servo_controller.setTarget(index, int(home_pos))
-            self.logger.info(f"Moving Servo {index} to home position {home_pos}")
+    def on_shutdown(self):
+        self.servo_controller.close()
+        self.get_logger().info("ControllerToServoNode is shutting down.")
 
 
 def main(args=None):
     rclpy.init(args=args)
-    node = ControllerToServo()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    node = ControllerToServoNode()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        node.on_shutdown()
+        node.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == "__main__":

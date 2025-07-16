@@ -23,35 +23,37 @@ def generate_launch_description():
     conversion_result = os.system(xacro_command)
 
     if conversion_result != 0:
-        raise RuntimeError(f"Failed to convert {urdf_path} to URDF.")
+        raise RuntimeError(f"Failed to convert {urdf_file} to URDF.")
 
     return LaunchDescription(
         [
             # Log the URDF path
             LogInfo(msg=f"Using URDF file at: {urdf_path}"),
             # Launch Gazebo
-            # ExecuteProcess(
-            #     cmd=["gz", "sim", "--verbose", "-v", "4", "empty.sdf"],
-            #     output="screen",
-            # ),
-            # # Spawn robot in Gazebo
-            # Node(
-            #     package="ros_gz_sim",
-            #     executable="create",
-            #     arguments=[
-            #         "-entity",
-            #         "robot",
-            #         "-file",
-            #         urdf_path,
-            #         "-x",
-            #         "0",
-            #         "-y",
-            #         "0",
-            #         "-z",
-            #         "0.25",
-            #     ],
-            #     output="screen",
-            # ),
+            ExecuteProcess(
+                cmd=["ign", "gazebo", "--verbose", "-r", "empty.sdf"],
+                output="screen",
+            ),
+            # Spawn robot in Gazebo
+            Node(
+                package="ros_ign_gazebo",
+                executable="create",
+                arguments=[
+                    "-name",
+                    "robot",
+                    "-file",
+                    urdf_output,
+                    "-x",
+                    "1",
+                    "-y",
+                    "1",
+                    "-z",
+                    "0.25",
+                    "-world",
+                    "empty",
+                ],
+                output="screen",
+            ),
             # Start robot state publisher
             Node(
                 package="robot_state_publisher",
@@ -63,25 +65,31 @@ def generate_launch_description():
                 ],
             ),
             # Start the controller manager
+            Node(
+                package="controller_manager",
+                executable="ros2_control_node",
+                parameters=[
+                    {"robot_description": open(urdf_path).read()},
+                    os.path.join(
+                        get_package_share_directory(package_name),
+                        "config",
+                        "robot_controllers.yaml",
+                    ),
+                ],
+                output="screen",
+            ),
             # Spawn the joint_state_broadcaster
             Node(
                 package="controller_manager",
-                executable="spawner",
+                executable="spawner.py",
                 arguments=["joint_state_broadcaster"],
                 output="screen",
             ),
             # Spawn the position_controllers
             Node(
                 package="controller_manager",
-                executable="spawner",
-                arguments=[
-                    "position_controllers",
-                    "--param-file",
-                    os.path.join(
-                        get_package_share_directory(package_name),
-                        "config/robot_controllers.yaml",
-                    ),
-                ],
+                executable="spawner.py",
+                arguments=["position_controllers"],
                 output="screen",
             ),
             # Start the joystick driver
@@ -105,12 +113,6 @@ def generate_launch_description():
                 package=package_name,
                 executable="initial_joint_position_publisher",  # This should match your Python node
                 name="initial_joint_position_publisher",
-                output="screen",
-            ),
-            Node(
-                package=package_name,
-                executable="controller_to_servo_n",  # This should match your Python node
-                name="controller_to_servo_n",
                 output="screen",
             ),
         ]
